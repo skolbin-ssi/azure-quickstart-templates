@@ -1,15 +1,15 @@
 ---
-description: This template provisions Azure DNS private resolver in a virtual network with required forwarding ruleset and rules. It creates a new virtual network with two subnets, and deploy Azure DNS private resolver in this VNET.
+description: This template provisions Azure DNS Private Resolver in a virtual network with required forwarding ruleset and rules. It creates a new virtual network with two subnets, and deploy Azure DNS Private Resolver in this VNET.
 page_type: sample
 products:
 - azure
 - azure-resource-manager
 urlFragment: azure-dns-private-resolver
 languages:
-- json
 - bicep
+- json
 ---
-# Azure DNS private resolver
+# Azure DNS Private Resolver
 
 ![Azure Public Test Date](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.network/azure-dns-private-resolver/PublicLastTestDate.svg)
 ![Azure Public Test Result](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.network/azure-dns-private-resolver/PublicDeployment.svg)

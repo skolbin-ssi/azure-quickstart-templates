@@ -57,7 +57,7 @@
       ],
       "type": "String",
       "metadata": {
-        "description": "Indicates whether public network access is allowed to the workspace with private endpoint - possible values are Enabled or Disabled"
+        "description": "Indicates whether public network access is allowed to the workspace with private endpoint - possible values are Enabled or Disabled."
       }
     },
     "publicSubnetCidr": {
@@ -123,6 +123,8 @@
   },
   "variables": {
     "managedResourceGroupName": "[format('databricks-rg-{0}-{1}', parameters('workspaceName'), uniqueString(parameters('workspaceName'), resourceGroup().id))]",
+    "trimmedMRGName": "[substring(variables('managedResourceGroupName'), 0, min(length(variables('managedResourceGroupName')), 90))]",
+    "managedResourceGroupId": "[concat(subscription().id, '/resourceGroups/', variables('trimmedMRGName'))]",
     "privateEndpointName": "[concat(parameters('workspaceName'), '-', 'pvtEndpoint')]",
     "privateDnsZoneName": "privatelink.azuredatabricks.net",
     "pvtEndpointDnsGroupName": "[concat(variables('privateEndpointName'),'/mydnsgroupname')]"
@@ -284,7 +286,7 @@
     },
         {
       "type": "Microsoft.Databricks/workspaces",
-      "apiVersion": "2021-04-01-preview",
+      "apiVersion": "2023-02-01",
       "name": "[parameters('workspaceName')]",
       "location": "[parameters('location')]",
       "dependsOn": [
@@ -294,7 +296,7 @@
         "name": "[parameters('pricingTier')]"
       },
       "properties": {
-        "managedResourceGroupId": "[subscriptionResourceId('Microsoft.Resources/resourceGroups', variables('managedResourceGroupName'))]",
+        "managedResourceGroupId": "[variables('managedResourceGroupId')]",
         "parameters": {
           "customVirtualNetworkId": {
             "value": "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
@@ -362,7 +364,7 @@
     },
     {
       "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
-      "apiVersion": "2020-03-01",
+      "apiVersion": "2021-12-01",
       "name": "[variables('pvtEndpointDnsGroupName')]",
       "location": "[parameters('location')]",
       "dependsOn": [

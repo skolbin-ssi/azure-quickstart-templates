@@ -41,6 +41,12 @@
         "description": "The name for the existing site / packet core control plane"
       }
     },
+    "sliceName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name for the existing slice"
+      }
+    },
     "platformType": {
       "type": "string",
       "defaultValue": "AKS-HCI",
@@ -95,7 +101,7 @@
   "resources": [
     {
       "type": "Microsoft.MobileNetwork/mobileNetworks",
-      "apiVersion": "2022-04-01-preview",
+      "apiVersion": "2022-11-01",
       "name": "[parameters('mobileNetworkName')]",
       "location": "[parameters('location')]",
       "properties": {
@@ -105,16 +111,44 @@
         }
       }
     },
+        {
+      "type": "Microsoft.MobileNetwork/mobileNetworks/slices",
+      "apiVersion": "2022-11-01",
+      "name": "[format('{0}/{1}', parameters('mobileNetworkName'), parameters('sliceName'))]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "snssai": {
+          "sst": 1
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.MobileNetwork/mobileNetworks', parameters('mobileNetworkName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.MobileNetwork/mobileNetworks/sites",
+      "apiVersion": "2022-11-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.MobileNetwork/mobileNetworks', parameters('mobileNetworkName'))]"
+      ],
+      "name": "[format('{0}/{1}', parameters('mobileNetworkName'), parameters('siteName'))]",
+      "location": "[parameters('location')]"
+    },
     {
       "type": "Microsoft.MobileNetwork/packetCoreControlPlanes",
-      "apiVersion": "2022-04-01-preview",
+      "apiVersion": "2022-11-01",
       "name": "[parameters('siteName')]",
       "location": "[parameters('location')]",
       "properties": {
-        "mobileNetwork": {
-          "id": "[resourceId('Microsoft.MobileNetwork/mobileNetworks', parameters('mobileNetworkName'))]"
+        "sites": [
+          {
+          "id": "[resourceId('Microsoft.MobileNetwork/mobileNetworks/sites', parameters('mobileNetworkName'), parameters('siteName'))]"
+          }
+        ],
+        "sku": "G0",
+        "localDiagnosticsAccess": {
+          "authenticationType": "Password"
         },
-        "sku": "EvaluationPackage",
         "coreNetworkTechnology": "[parameters('coreNetworkTechnology')]",
         "platform": {
           "type": "[parameters('platformType')]",
@@ -128,26 +162,22 @@
         }
       },
       "dependsOn": [
-        "[resourceId('Microsoft.MobileNetwork/mobileNetworks', parameters('mobileNetworkName'))]"
+        "[resourceId('Microsoft.MobileNetwork/mobileNetworks/sites', parameters('mobileNetworkName'), parameters('siteName'))]"
       ]
     }
   ],
   "outputs": {
-    "existingMobileNetworkName": {
-      "type": "string",
-      "value": "[parameters('mobileNetworkName')]"
-    },
     "existingSiteName": {
       "type": "string",
       "value": "[parameters('siteName')]"
     },
+    "existingSiteId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.MobileNetwork/mobileNetworks/sites', parameters('mobileNetworkName'), parameters('siteName'))]"
+    },
     "existingPacketCoreNetworkTechnology": {
       "type": "string",
       "value": "[parameters('coreNetworkTechnology')]"
-    },
-    "existingPacketCorePlatformType": {
-      "type": "string",
-      "value": "[parameters('platformType')]"
     },
     "existingPacketCoreCustomLocationId": {
       "type": "string",

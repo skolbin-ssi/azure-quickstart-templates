@@ -4,11 +4,8 @@ param location string = resourceGroup().location
 @description('The name of the existing packet core / site.')
 param existingSiteName string = 'myExampleSite'
 
-@description('The name of the existing packet core platform type.')
-param existingPacketCorePlatformType string = 'AKS-HCI'
-
-@description('The name of the mobile network.')
-param existingMobileNetworkName string
+@description('The ID of the site.')
+param existingSiteId string
 
 @description('The mode in which the packet core instance will run.')
 @allowed([
@@ -35,23 +32,63 @@ param accessGateway string
 @description('The version of packet core to use. Only set this field when instructed to by your support engineer.')
 param newVersion string = ''
 
+@description('Name of the existing slice to use for the packetcorecontrolPlane')
+param existingSliceName string = 'slice-1'
+
+@description('The name for the private mobile network')
+param mobileNetworkName string
+
+@description('The mobile country code for the private mobile network')
+param mobileCountryCode string = '001'
+
+@description('The mobile network code for the private mobile network')
+param mobileNetworkCode string = '01'
+
+
 #disable-next-line BCP081
-resource existingMobileNetwork 'Microsoft.MobileNetwork/mobileNetworks@2022-04-01-preview' existing = {
-  name: existingMobileNetworkName
+resource exampleMobileNetwork 'Microsoft.MobileNetwork/mobileNetworks@2022-11-01' = {
+  name: mobileNetworkName
+  location: location
+  properties: {
+    publicLandMobileNetworkIdentifier: {
+      mcc: mobileCountryCode
+      mnc: mobileNetworkCode
+    }
+  }
 }
 
 #disable-next-line BCP081
-resource examplePacketCoreControlPlane 'Microsoft.MobileNetwork/packetCoreControlPlanes@2022-04-01-preview' = {
-  name: existingSiteName
+resource existingSlice 'Microsoft.MobileNetwork/mobileNetworks/slices@2022-11-01' = {
+  parent: exampleMobileNetwork
+  name: existingSliceName
   location: location
   properties: {
-    mobileNetwork: {
-      id: existingMobileNetwork.id
+    snssai: {
+      sst: 1
     }
-    sku: 'EvaluationPackage'
+  }
+}
+
+#disable-next-line BCP081
+resource examplePacketCoreControlPlane 'Microsoft.MobileNetwork/packetCoreControlPlanes@2022-11-01' = {
+  name: existingSiteName
+  location: location
+  dependsOn: [
+    existingSlice
+  ]
+  properties: {
+    sites: [
+      {
+        id: existingSiteId
+      }
+    ]
+    localDiagnosticsAccess: {
+      authenticationType: 'Password'
+    }
+    sku: 'G0'
     coreNetworkTechnology: existingPacketCoreNetworkTechnology
     platform: {
-      type: existingPacketCorePlatformType
+      type: 'AKS-HCI'
       customLocation: empty(existingPacketCoreCustomLocationId) ? null : {
         id: existingPacketCoreCustomLocationId
       }
@@ -64,4 +101,4 @@ resource examplePacketCoreControlPlane 'Microsoft.MobileNetwork/packetCoreContro
     }
     version: newVersion
   }
-}
+ }

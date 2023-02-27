@@ -7,7 +7,6 @@ products:
 urlFragment: databricks-workspace
 languages:
 - json
-- bicep
 ---
 # Deploy an Azure Databricks Workspace
 

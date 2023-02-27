@@ -7,7 +7,6 @@ products:
 urlFragment: databricks-all-in-one-template-for-vnet-injection
 languages:
 - json
-- bicep
 ---
 # Azure Databricks All-in-one Template for VNet Injection
 
