@@ -1,5 +1,167 @@
 # Change log for Azure template SharePoint-ADFS
 
+## Unreleased
+
+### Added
+
+- Template
+  - Add parameter `outboundAccessMethod`, to choose how the virtual machines connect to internet. Now, they can connect through either a public IP, or using Azure Firewall as an HTTP proxy
+  - Add value `Subscription-24H1` to parameter `sharePointVersion`, to install SharePoint Subscription with 24H1 update
+  - Add value `Subscription-24H2` to parameter `sharePointVersion`, to install SharePoint Subscription with 24H2 update
+
+### Changed
+
+- Template
+  - Convert the template to Bicep
+  - [BREAKING CHANGE] Rename most of the parameters
+  - Update the display name of most of the resources to be more consistent and reflect their relationship with each other
+  - Value `Subscription-Latest` for parameter `sharePointVersion` now installs the September 2024 CU for SharePoint Subscription
+- All DSC configurations
+  - Add a firewall rule to all virtual machines to allow remote event viewer connections
+  - Updated DSC module `ActiveDirectoryDsc` to 6.4.0
+  - Updated DSC module `ComputerManagementDsc` to 9.1.0
+  - Updated DSC module `SharePointDSC` to 5.5.0
+- DSC Configuration for DC
+  - Updated DSC module `AdfsDsc` to 1.4.0
+
+## Enhancements & bug-fixes - Published in February 26, 2024
+
+### Changed
+
+- Template
+  - Value `Subscription-Latest` for parameter `sharePointVersion` now installs the February 2024 CU for SharePoint Subscription
+  - Remove SharePoint 2013
+- All SharePoint configurations
+  - Add network share `SPLOGS` on folder `C:\Program Files\Common Files\Microsoft Shared\Web Server Extensions\16\LOGS`
+- Configuration for SPSE
+  - Update the registry keys required to allow OneDrive on OIDC authentication
+  - Update claims provider to LDAPCPSE
+  - It is no longer needed to restart the VM to be able to create the SPTrustedIdentityTokenIssuer, which saves a few minutes
+- Configuration for SPLE
+  - Update claims provider to LDAPCPSE
+  - It is no longer needed to restart the VM to be able to create the SPTrustedIdentityTokenIssuer, which saves a few minutes
+
+## Enhancements & bug-fixes - Published in December 18, 2023
+
+### Changed
+
+- Template
+  - Value `Subscription-Latest` for parameter `sharePointVersion` now installs the December 2023 CU for SharePoint Subscription
+  - Add a resource `runCommands` to run a script that increases MaxEnvelopeSizeKb on SPSE, so that service WS-Management in SPSE can process the bigger DSC script
+- Configuration for SPSE
+  - Add claim type groupsid to make the switch to SPTrustedBackedByUPAClaimProvider easier. There are remaining steps needed to finalize its configuration
+- Configuration for SPSE and FESE
+  - Set registry keys to configure OneDrive NGSC for OIDC authentication
+  - Format the document
+
+## Enhancements & bug-fixes - Published in November 16, 2023
+
+### Changed
+
+- Template
+  - Value `Subscription-Latest` for parameter `sharePointVersion` now installs the November 2023 CU for SharePoint Subscription
+- Configuration for SPSE
+  - Configure the SPTrustedBackedByUPAClaimProvider (as much as possible). There are remaining steps needed to finalize its configuration
+  - Update creation of user profiles to set their PreferredName
+  - Format the document
+- Configuration for most VMs
+    - Bump DSC modules ActiveDirectoryDsc and SqlServerDsc
+
+## Enhancements & bug-fixes - Published in October 12, 2023
+
+### Changed
+
+- Template
+  - Value `Subscription-Latest` for parameter `sharePointVersion` now installs the October 2023 CU for SharePoint Subscription
+- Configuration for SPSE
+  - When doing a slipstream install of SharePoint using 2022-10 CU or newer: Fixed the SharePoint configuration wizard hanging at 10% of step 10/10, when executed after 
+
+### Fixed
+- All SharePoint configurations
+  - Fixed regression with installation of Chocolatey
+
+## Enhancements & bug-fixes - Published in September 13, 2023
+
+### Changed
+
+- Template
+  - Added value `Subscription-23H2` to parameter `sharePointVersion`, to install SharePoint Subscription with 23H2 update
+  - Value `Subscription-Latest` for parameter `sharePointVersion` now installs the September 2023 CU for SharePoint Subscription (23H2 update)
+
+## Enhancements & bug-fixes - Published in August 21, 2023
+
+### Fixed
+
+- Configuration for SPSE
+  - When doing a slipstream install of SharePoint using 2022-10 CU or newer: Fixed the SharePoint configuration wizard hanging at 10% of step 10/10, when executed after installing a CU
+
+### Changed
+
+- Template
+  - Changed the prefix of the built-in administrator from `local-` to `l-` so it does not exceed 15 characters, because the reset password feature in Azure requires that it has 15 characters maximum.
+  - Value `Subscription-Latest` for parameter `sharePointVersion` now installs the August 2023 CU for SharePoint Subscription
+
+## Enhancements & bug-fixes - Published in June 30, 2023
+
+### Fixed
+
+- Configuration for SP Legacy and FE Legacy (SharePoint 2019 / 2016 / 2013 VMs)
+  - Fixed the deployment error caused by DSC resource cChocoInstaller
+
+## Enhancements & bug-fixes - Published in June 19, 2023
+
+### Changed
+
+- Template
+  - Value `Subscription-Latest` for parameter `sharePointVersion` now installs the June 2023 CU for SharePoint Subscription
+  - Updated SQL image to use SQL Server 2022 on Windows Server 2022.
+- Configuration for all virtual machines
+  - Update DSC module `ComputerManagementDsc`
+- Configuration for all VMs except DC
+  - Update DSC module `SqlServerDsc`
+- Configuration for SPSE and FESE
+  - Update DSC module `StorageDsc`
+
+## Enhancements & bug-fixes - Published in June 02, 2023
+
+### Changed
+
+- Template
+  - Value `Subscription-Latest` for parameter `sharePointVersion` now installs the May 2023 CU for SharePoint Subscription
+- Configuration for DC
+  - Update DSC module `AdfsDsc`
+
+## Enhancements & bug-fixes - Published in April 12, 2023
+
+### Fixed
+
+- Template
+  - The size of the OS disk is no longer hardcoded on SharePoint virtual machines, so now VMs for SharePoint Subscription and 2019 are really created with a 32 GB disk
+
+### Changed
+
+- Template
+  - Value `Subscription-Latest` for parameter `sharePointVersion` now installs the April 2023 CU for SharePoint Subscription
+
+## Enhancements & bug-fixes - Published in April 06, 2023
+
+### Added
+
+- Template
+  - Added value `Subscription-23H1` to parameter `sharePointVersion`, to install SharePoint Subscription with 23H1 update
+
+### Changed
+
+- Configuration for SQL
+  - Update SQL module `SqlServer` and DSC module `SqlServerDsc`
+- Configuration for DC
+  - Update DSC module `AdfsDsc`
+- Configuration for all SharePoint versions
+  - Update DSC module `SharePointDsc`
+- Configuration for SharePoint Subscription
+  - Add domain administrator as a SharePoint shell admin (done by cmdlet `Add-SPShellAdmin`)
+  - For OIDC: Change the nonce secret key to a more unique value and rename the certificate used to sign the nonce
+
 ## Enhancements & bug-fixes - Published in February 07, 2023
 
 ### Added

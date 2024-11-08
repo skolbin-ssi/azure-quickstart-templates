@@ -4,15 +4,15 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.13.1.58284",
-      "templateHash": "14120824705389637225"
+      "version": "0.27.1.19265",
+      "templateHash": "5007858938548038683"
     }
   },
   "parameters": {
     "basename": {
       "type": "string",
-      "maxLength": 16,
       "minLength": 3,
+      "maxLength": 16,
       "metadata": {
         "description": "Basename that is used to name provisioned resources. Should be alphanumeric, at least 3 characters and up to or less than 16 characters."
       }
@@ -25,13 +25,18 @@
         "centralindia",
         "eastus",
         "eastus2",
+        "francecentral",
+        "germanywestcentral",
+        "japaneast",
         "koreacentral",
+        "northcentralus",
         "northeurope",
         "qatarcentral",
         "southcentralus",
         "southeastasia",
         "swedencentral",
         "switzerlandnorth",
+        "westcentralus",
         "westeurope",
         "westus2",
         "westus3",
@@ -58,7 +63,7 @@
         "template": []
       },
       "metadata": {
-        "description": "The mapping JSON that determines how normalized data is converted to FHIR Observations."
+        "description": "The mapping JSON that determines how normalized data is converted into FHIR Observations."
       }
     }
   },
@@ -81,7 +86,8 @@
         "zoneRedundant": true,
         "isAutoInflateEnabled": true,
         "maximumThroughputUnits": 8,
-        "kafkaEnabled": false
+        "kafkaEnabled": false,
+        "disableLocalAuth": true
       }
     },
     {

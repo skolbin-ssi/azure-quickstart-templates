@@ -1,5 +1,5 @@
 ---
-description: The MedTech service is an optional service of the Azure Health Data Services.
+description: The MedTech service is one of the Azure Health Data Services designed to ingest device data from multiple devices, transform the device data into FHIR Observations, which are then persisted in the Azure Health Data Services FHIR service.
 page_type: sample
 products:
 - azure
@@ -28,17 +28,22 @@ languages:
 
 ## Overview
 
-This template deploys the MedTech service with the required resources and access permissions. Conforming and valid device and Fast Healthcare Interoperability Resources (FHIR®) destination mappings are still required.
+> [!NOTE]
+> [Fast Healthcare Interoperability Resources (FHIR®)](https://www.hl7.org/fhir/) is an open healthcare specification.
 
-* To learn about this Azure Resource Manager (ARM) template, the resources deployed, configured access permissions, and required post-deployment tasks, see [Deploy the MedTech service with an Azure Resource Manager template](https://learn.microsoft.com/azure/healthcare-apis/iot/deploy-new-arm)
+This template deploys the MedTech service with the required resources and access permissions. Conforming and valid device and FHIR destination mappings are still required.
+
+* To learn about this Azure Resource Manager (ARM) template, the resources deployed, configured access permissions, and required post-deployment tasks, see [Deploy the MedTech service with an Azure Resource Manager template](https://learn.microsoft.com/azure/healthcare-apis/iot/deploy-new-arm).
 
 * To learn about the MedTech service, see [What is the MedTech service?](https://learn.microsoft.com/azure/healthcare-apis/iot/overview)
 
-* To learn about the MedTech service device message data transformation, see [Understand the MedTech service device message data transformation](https://learn.microsoft.com/azure/healthcare-apis/iot/understand-service)
+* To learn about the MedTech service device data processing stages, see [Overview of the MedTech service device data processing stages](https://learn.microsoft.com/azure/healthcare-apis/iot/overview-of-device-data-processing-stages).
 
-* To learn about the MedTech service device mappings, see [How to configure device mappings](https://learn.microsoft.com/azure/healthcare-apis/iot/how-to-configure-device-mappings)
+* To learn how to use the MedTech service Mapping debugger, see [How to use the MedTech service Mapping debugger](https://learn.microsoft.com/azure/healthcare-apis/iot/how-to-use-mapping-debugger).
 
-* To learn about the MedTech service FHIR destination mappings, see [How to configure FHIR destination mappings](https://learn.microsoft.com/azure/healthcare-apis/iot/how-to-configure-fhir-mappings)
+* For an overview of the MedTech service device mapping, see [Overview of the MedTech service device mapping](https://learn.microsoft.com/azure/healthcare-apis/iot/overview-of-device-mapping).
+
+* For an overview of the MedTech service FHIR destination mapping, see [Overview of the MedTech service FHIR destination mapping](https://learn.microsoft.com/azure/healthcare-apis/iot/overview-of-fhir-destination-mapping).
 
 FHIR® is a registered trademark of Health Level Seven International, registered in the U.S. Trademark Office and is used with their permission.
 

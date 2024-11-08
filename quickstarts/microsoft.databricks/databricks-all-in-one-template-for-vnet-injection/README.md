@@ -1,11 +1,12 @@
 ---
-description: This template allows you to create a network security group, a virtual network and an Azure Databricks workspace with the virtual network.
+description: This template allows you to create a network security group, a virtual network, a NAT gateway and an Azure Databricks workspace with the virtual network.
 page_type: sample
 products:
 - azure
 - azure-resource-manager
 urlFragment: databricks-all-in-one-template-for-vnet-injection
 languages:
+- bicep
 - json
 ---
 # Azure Databricks All-in-one Template for VNet Injection
@@ -19,6 +20,7 @@ languages:
 ![Best Practice Check](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.databricks/databricks-all-in-one-template-for-vnet-injection/BestPracticeResult.svg)
 ![Cred Scan Check](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.databricks/databricks-all-in-one-template-for-vnet-injection/CredScanResult.svg)
 
+![Bicep Version](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.databricks/databricks-all-in-one-template-for-vnet-injection/BicepVersion.svg)
 ![Bicep Version](https://azurequickstartsservice.blob.core.windows.net/badges/quickstarts/microsoft.databricks/databricks-all-in-one-template-for-vnet-injection/BicepVersion.svg)
 
 [![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.databricks%2Fdatabricks-all-in-one-template-for-vnet-injection%2Fazuredeploy.json)
@@ -49,4 +51,4 @@ DataBricks Premium
 
 [Data Bricks Microsoft Learn Modules](https://docs.microsoft.com/learn/browse/?term=Databricks)
 
-`Tags: Microsoft.Network/networkSecurityGroups, Microsoft.Network/virtualNetworks, Microsoft.Databricks/workspaces`
+`Tags: Microsoft.Network/publicIPAddresses, Microsoft.Network/natGateways, Microsoft.Network/networkSecurityGroups, Microsoft.Network/virtualNetworks, Microsoft.Databricks/workspaces`
